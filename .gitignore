@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+.npm
+
+# Compilation Artifacts
+dist/
+build/
+coverage/
+
+# TypeScript output files
+# Ensures compiled JS and source maps are ignored
+*.js
+*.js.map
+*.d.ts
+
+# Optional: typings directory
+# If you manage types in a specific directory
+typings/
+
+# Editor/OS Files
+.idea/         # IntelliJ IDEA
+.vscode/       # VS Code (optional, if sharing workspace settings)
+.cache/
+.project
+.classpath
+.settings/
+.DS_Store      # macOS
+Thumbs.db      # Windows
+
+# Logs and temporary files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+test-results.xml

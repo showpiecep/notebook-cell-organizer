@@ -1,0 +1,68 @@
+{
+  "name": "notebook-cell-organizer",
+  "displayName": "Notebook Cell Organizer",
+  "description": "Moves shell commands and imports to dedicated cells at the top of a Jupyter notebook",
+  "version": "0.1.0",
+  "publisher": "showpiecep",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/showpiecep/notebook-cell-organizer"
+  },
+  "engines": {
+    "vscode": "^1.109.0"
+  },
+  "categories": [
+    "Notebooks",
+    "Formatters"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "notebook-cell-organizer.organize",
+        "title": "Organize Notebook Cells",
+        "category": "Notebook",
+        "icon": "$(list-ordered)"
+      }
+    ],
+    "menus": {
+      "notebook/toolbar": [
+        {
+          "command": "notebook-cell-organizer.organize",
+          "when": "notebookType == 'jupyter-notebook'",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Notebook Cell Organizer",
+      "properties": {
+        "notebook-cell-organizer.organizeOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically organize notebook cells when saving"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.109.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "typescript-eslint": "^8.56.1",
+    "eslint": "^9.39.3",
+    "typescript": "^5.9.3",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}

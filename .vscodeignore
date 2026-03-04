@@ -1,0 +1,16 @@
+.vscode/**
+.vscode-test/**
+src/**
+.gitignore
+.yarnrc
+*.md
+!README.md
+!CHANGELOG.md
+**/tsconfig.json
+**/eslint.config.mjs
+**/*.map
+**/*.ts
+**/.vscode-test.*
+out/test/**
+images/**
+**.ipynb
