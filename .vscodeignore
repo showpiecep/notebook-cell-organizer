@@ -12,5 +12,6 @@ src/**
 **/*.ts
 **/.vscode-test.*
 out/test/**
-images/**
+images/demo.gif
+.markdownlint.json
 **.ipynb

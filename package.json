@@ -2,15 +2,16 @@
   "name": "notebook-cell-organizer",
   "displayName": "Notebook Cell Organizer",
   "description": "Moves shell commands and imports to dedicated cells at the top of a Jupyter notebook",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "showpiecep",
+  "icon": "images/icon.png",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/showpiecep/notebook-cell-organizer"
   },
   "engines": {
-    "vscode": "^1.109.0"
+    "vscode": "^1.100.0"
   },
   "categories": [
     "Notebooks",
@@ -56,7 +57,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.109.0",
+    "@types/vscode": "^1.100.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
     "typescript-eslint": "^8.56.1",

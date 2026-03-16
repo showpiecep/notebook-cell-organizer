@@ -29,13 +29,36 @@ async function organizeNotebook(notebook: vscode.NotebookDocument, silent = fals
         const originalText = cell.document.getText();
         const remaining: string[] = [];
 
-        for (const line of originalText.split('\n')) {
+        const lines = originalText.split('\n');
+        let j = 0;
+        while (j < lines.length) {
+            const line = lines[j];
             if (SHELL_RE.test(line)) {
                 shellLines.add(line);
+                j++;
             } else if (IMPORT_RE.test(line)) {
-                importLines.add(line);
+                const opens = (line.match(/\(/g) || []).length;
+                const closes = (line.match(/\)/g) || []).length;
+                if (opens > closes) {
+                    // Multi-line import: collect until parens are balanced
+                    const block: string[] = [line];
+                    let balance = opens - closes;
+                    j++;
+                    while (j < lines.length && balance > 0) {
+                        const l = lines[j];
+                        block.push(l);
+                        balance += (l.match(/\(/g) || []).length;
+                        balance -= (l.match(/\)/g) || []).length;
+                        j++;
+                    }
+                    importLines.add(block.join('\n'));
+                } else {
+                    importLines.add(line);
+                    j++;
+                }
             } else {
                 remaining.push(line);
+                j++;
             }
         }
 
@@ -49,6 +72,18 @@ async function organizeNotebook(notebook: vscode.NotebookDocument, silent = fals
     }
 
     if (shellLines.size === 0 && importLines.size === 0) {
+        if (!silent) {
+            vscode.window.showInformationMessage('Nothing to organize.');
+        }
+        return;
+    }
+
+    // Idempotency check: if only the top N cells were touched and all become empty,
+    // the notebook is already organized — nothing would actually change
+    const newCellCount = (shellLines.size > 0 ? 1 : 0) + (importLines.size > 0 ? 1 : 0);
+    const onlyTopModified = [...cellNewTexts.keys()].every(k => k < newCellCount);
+    const allBecomeEmpty = [...cellNewTexts.values()].every(v => v === '');
+    if (onlyTopModified && allBecomeEmpty) {
         if (!silent) {
             vscode.window.showInformationMessage('Nothing to organize.');
         }
@@ -100,7 +135,7 @@ async function organizeNotebook(notebook: vscode.NotebookDocument, silent = fals
 
     if (!silent) {
         vscode.window.showInformationMessage(
-            `Done! Shell: ${shellLines.size} line(s), Imports: ${importLines.size} line(s).`
+            `Done! Shell: ${shellLines.size} line(s), Imports: ${importLines.size} statement(s).`
         );
     }
 }
