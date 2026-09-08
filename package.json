@@ -44,6 +44,30 @@
           "type": "boolean",
           "default": false,
           "description": "Automatically organize notebook cells when saving"
+        },
+        "notebook-cell-organizer.useRuffForImportSorting": {
+          "type": "boolean",
+          "default": false,
+          "description": "Sort collected Python imports with Ruff. If the configured command is unavailable or fails, the original imports are kept and the error is written to the Notebook Cell Organizer output channel."
+        },
+        "notebook-cell-organizer.ruff.command": {
+          "type": "string",
+          "default": "ruff",
+          "description": "Ruff executable name from PATH or an absolute executable path"
+        },
+        "notebook-cell-organizer.ruff.arguments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "check",
+            "--select",
+            "I",
+            "--fix",
+            "${file}"
+          ],
+          "description": "Arguments passed to the Ruff command. ${file} is replaced with a temporary Python file containing the collected imports."
         }
       }
     }
@@ -54,7 +78,7 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "node --test out/test/organizer.test.js out/test/ruff.test.js"
   },
   "devDependencies": {
     "@types/vscode": "^1.100.0",

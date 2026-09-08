@@ -4,6 +4,14 @@ All notable changes to the "notebook-cell-organizer" extension will be documente
 
 ## [Unreleased]
 
+### Added
+
+- Optional Ruff import sorting with configurable command and arguments
+
+### Changed
+
+- Preserve imports inside `TYPE_CHECKING`, conditional, `try`, function, and class blocks
+
 ## [0.2.0] - 2026-03-16
 
 ### Added
