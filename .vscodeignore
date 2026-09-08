@@ -1,5 +1,8 @@
 .vscode/**
+.github/**
 .vscode-test/**
+.ruff_cache/**
+scripts/**
 src/**
 .gitignore
 .yarnrc
