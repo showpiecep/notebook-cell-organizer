@@ -1,5 +1,9 @@
 # Notebook Cell Organizer
 
+[Website](https://showpiecep.github.io/notebook-cell-organizer/) ·
+[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer) ·
+[Issues](https://github.com/showpiecep/notebook-cell-organizer/issues)
+
 ![Demo](images/demo.gif)
 
 A VS Code extension that automatically reorganizes cells in a Jupyter Notebook — moving shell commands and imports to dedicated cells at the top.
@@ -61,6 +65,39 @@ Enable in settings: `Cmd+,` → search for `organizeOnSave` → toggle on.
 | Setting | Type | Default | Description |
 |---------|------|---------|-------------|
 | `notebook-cell-organizer.organizeOnSave` | boolean | `false` | Automatically organize cells every time the notebook is saved |
+| `notebook-cell-organizer.useRuffForImportSorting` | boolean | `false` | Sort collected Python imports with Ruff when available |
+| `notebook-cell-organizer.ruff.command` | string | `ruff` | Ruff executable from `PATH`, or an absolute executable path |
+| `notebook-cell-organizer.ruff.arguments` | string[] | `check --select I --fix ${file}` | Arguments passed to the configured command |
+
+### Sorting Imports with Ruff
+
+Enable `notebook-cell-organizer.useRuffForImportSorting` to sort the collected
+Python imports with [Ruff](https://docs.astral.sh/ruff/). Ruff must be available
+in `PATH`, unless `notebook-cell-organizer.ruff.command` contains an absolute
+path to the executable.
+
+`${file}` in `notebook-cell-organizer.ruff.arguments` is replaced with a
+temporary Python file. For example, Ruff installed through `uv` can be used
+with:
+
+```json
+{
+  "notebook-cell-organizer.ruff.command": "uv",
+  "notebook-cell-organizer.ruff.arguments": [
+    "run",
+    "ruff",
+    "check",
+    "--select",
+    "I",
+    "--fix",
+    "${file}"
+  ]
+}
+```
+
+The command is executed without a shell. If it is unavailable, times out, or
+fails, the extension keeps the original collected imports and reports the
+reason in the **Notebook Cell Organizer** output channel.
 
 ## Recognized Patterns
 
@@ -80,23 +117,43 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 ```
 
-## Known Limitations
+Multi-line imports with parentheses are supported:
 
-- Multi-line imports with parentheses are not yet supported:
+```python
+from sklearn import (
+    train_test_split,
+    cross_val_score,
+)
+```
 
-  ```python
-  from sklearn import (    # ← not recognized
-      train_test_split,
-      cross_val_score,
-  )
-  ```
-
-- `TYPE_CHECKING` blocks and conditional imports are treated as regular code
+Only top-level imports are moved. Imports inside `TYPE_CHECKING` blocks,
+conditionals, `try` blocks, functions, and classes stay in their original
+location so that organizing a notebook does not change its runtime behavior.
 
 ## Requirements
 
-- VS Code `^1.109.0`
+- VS Code `^1.100.0` (April 2025)
 - [Jupyter extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) for opening `.ipynb` files
+
+## Local Website Preview
+
+Install [Quarto](https://quarto.org/docs/get-started/), then start the website
+with live reload:
+
+```bash
+make site-preview
+```
+
+The preview command opens the site in a browser and keeps running until you
+press `Ctrl+C`. To render static files into `site/_site` without starting a
+server, run:
+
+```bash
+make site
+```
+
+In VS Code, the same commands are available through **Tasks: Run Task** as
+**Website: Preview Quarto** and **Website: Render Quarto**.
 
 ## License
 

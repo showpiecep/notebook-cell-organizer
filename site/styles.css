@@ -1,0 +1,134 @@
+:root {
+  --nco-ink: #172033;
+  --nco-muted: #5c667a;
+  --nco-line: #dde3ed;
+  --nco-soft: #f5f7fb;
+  --nco-accent: #3564d4;
+  --nco-accent-dark: #254ca8;
+}
+
+body {
+  color: var(--nco-ink);
+}
+
+.navbar {
+  border-bottom: 1px solid var(--nco-line);
+}
+
+.navbar-brand img {
+  border-radius: 0.35rem;
+}
+
+.quarto-title-block {
+  margin: 2.5rem auto 1.5rem;
+  max-width: 900px;
+  text-align: center;
+}
+
+.quarto-title .title {
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  font-weight: 750;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.quarto-title .subtitle {
+  color: var(--nco-muted);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.55;
+  margin: 1.2rem auto 0;
+  max-width: 760px;
+}
+
+.quarto-title-block .description {
+  display: none;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin: 1rem auto;
+}
+
+.btn-primary {
+  background-color: var(--nco-accent);
+  border-color: var(--nco-accent);
+}
+
+.btn-primary:hover {
+  background-color: var(--nco-accent-dark);
+  border-color: var(--nco-accent-dark);
+}
+
+.trust-line {
+  color: var(--nco-muted);
+  font-size: 0.95rem;
+  margin: 1rem auto 3rem;
+  text-align: center;
+}
+
+.demo-frame {
+  background: var(--nco-soft);
+  border: 1px solid var(--nco-line);
+  border-radius: 1rem;
+  margin: 1.5rem 0 2.5rem;
+  padding: 1rem;
+}
+
+.demo-frame img {
+  border-radius: 0.55rem;
+  display: block;
+  margin: 0 auto;
+}
+
+.feature-grid,
+.comparison-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0 3rem;
+}
+
+.feature-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.comparison-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.feature-card,
+.comparison-card {
+  border: 1px solid var(--nco-line);
+  border-radius: 0.85rem;
+  padding: 1.25rem;
+}
+
+.feature-card h3,
+.comparison-card h3 {
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+
+.feature-card p:last-child,
+.comparison-card p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .feature-grid,
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+}

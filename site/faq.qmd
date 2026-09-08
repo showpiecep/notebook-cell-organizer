@@ -1,0 +1,46 @@
+---
+title: "Frequently asked questions"
+description: "Answers about organizing Python imports and shell commands in Jupyter Notebook IPYNB files with VS Code."
+canonical-url: https://showpiecep.github.io/notebook-cell-organizer/faq.html
+image: assets/icon.png
+header-includes: |
+  <link rel="alternate" hreflang="en" href="https://showpiecep.github.io/notebook-cell-organizer/faq.html">
+  <link rel="alternate" hreflang="ru" href="https://showpiecep.github.io/notebook-cell-organizer/ru/faq.html">
+  <link rel="alternate" hreflang="x-default" href="https://showpiecep.github.io/notebook-cell-organizer/faq.html">
+---
+
+## Does the extension edit the IPYNB JSON directly?
+
+No. It uses the VS Code Notebook API and edits notebook cells through the
+active notebook editor.
+
+## Which imports are moved?
+
+Only top-level Python imports are collected. Parenthesized multi-line imports
+are supported. Imports nested inside `TYPE_CHECKING`, `if`, `try`, functions,
+and classes remain in their original location.
+
+## Does Ruff have to be installed?
+
+No. Ruff sorting is disabled by default. The built-in collection and
+deduplication behavior does not depend on Python tools.
+
+## What happens when Ruff is enabled but missing?
+
+The normal organization still completes and the original import order is kept.
+The extension records the Ruff error in its VS Code output channel.
+
+## Can I use Ruff from a virtual environment?
+
+Yes. Set `notebook-cell-organizer.ruff.command` to the absolute Ruff executable
+path, or configure `uv` as described in the [Ruff setup guide](ruff.qmd).
+
+## Can organization run automatically?
+
+Yes. Enable `notebook-cell-organizer.organizeOnSave` in VS Code settings.
+
+## How do I report an issue?
+
+Open an issue in the
+[GitHub repository](https://github.com/showpiecep/notebook-cell-organizer/issues)
+with a minimal notebook example and the expected result.

@@ -1,0 +1,47 @@
+---
+title: "Частые вопросы"
+description: "Ответы на вопросы об организации импортов Python и команд оболочки в Jupyter Notebook и IPYNB с помощью VS Code."
+canonical-url: https://showpiecep.github.io/notebook-cell-organizer/ru/faq.html
+image: ../assets/icon.png
+header-includes: |
+  <link rel="alternate" hreflang="en" href="https://showpiecep.github.io/notebook-cell-organizer/faq.html">
+  <link rel="alternate" hreflang="ru" href="https://showpiecep.github.io/notebook-cell-organizer/ru/faq.html">
+  <link rel="alternate" hreflang="x-default" href="https://showpiecep.github.io/notebook-cell-organizer/faq.html">
+---
+
+## Расширение изменяет JSON файла IPYNB напрямую?
+
+Нет. Оно использует Notebook API VS Code и изменяет ячейки через активный
+редактор notebook.
+
+## Какие импорты переносятся?
+
+Собираются только импорты Python верхнего уровня. Поддерживаются многострочные
+импорты со скобками. Импорты внутри `TYPE_CHECKING`, `if`, `try`, функций и
+классов остаются на исходном месте.
+
+## Обязательно ли устанавливать Ruff?
+
+Нет. Сортировка Ruff по умолчанию отключена. Встроенные сбор и удаление
+дубликатов не зависят от инструментов Python.
+
+## Что произойдёт, если Ruff включён, но не установлен?
+
+Обычная организация всё равно завершится, а исходный порядок импортов
+сохранится. Расширение запишет ошибку Ruff в свой канал вывода VS Code.
+
+## Можно ли использовать Ruff из виртуального окружения?
+
+Да. Укажите абсолютный путь до Ruff в
+`notebook-cell-organizer.ruff.command` либо настройте `uv`, как описано в
+[руководстве по Ruff](ruff.qmd).
+
+## Можно ли запускать организацию автоматически?
+
+Да. Включите `notebook-cell-organizer.organizeOnSave` в настройках VS Code.
+
+## Как сообщить о проблеме?
+
+Создайте issue в
+[репозитории GitHub](https://github.com/showpiecep/notebook-cell-organizer/issues),
+приложив минимальный пример notebook и ожидаемый результат.

@@ -10,6 +10,19 @@
     "type": "git",
     "url": "https://github.com/showpiecep/notebook-cell-organizer"
   },
+  "homepage": "https://showpiecep.github.io/notebook-cell-organizer/",
+  "bugs": {
+    "url": "https://github.com/showpiecep/notebook-cell-organizer/issues"
+  },
+  "keywords": [
+    "jupyter",
+    "notebook",
+    "ipynb",
+    "python",
+    "imports",
+    "import sorting",
+    "ruff"
+  ],
   "engines": {
     "vscode": "^1.100.0"
   },
@@ -44,26 +57,51 @@
           "type": "boolean",
           "default": false,
           "description": "Automatically organize notebook cells when saving"
+        },
+        "notebook-cell-organizer.useRuffForImportSorting": {
+          "type": "boolean",
+          "default": false,
+          "description": "Sort collected Python imports with Ruff. If the configured command is unavailable or fails, the original imports are kept and the error is written to the Notebook Cell Organizer output channel."
+        },
+        "notebook-cell-organizer.ruff.command": {
+          "type": "string",
+          "default": "ruff",
+          "description": "Ruff executable name from PATH or an absolute executable path"
+        },
+        "notebook-cell-organizer.ruff.arguments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "check",
+            "--select",
+            "I",
+            "--fix",
+            "${file}"
+          ],
+          "description": "Arguments passed to the Ruff command. ${file} is replaced with a temporary Python file containing the collected imports."
         }
       }
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "clean": "node scripts/clean.mjs",
+    "vscode:prepublish": "npm run clean && npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
+    "pretest": "npm run clean && npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "node --test out/test/*.test.js",
+    "package": "vsce package",
+    "verify:release-version": "node scripts/verify-release-version.mjs"
   },
   "devDependencies": {
-    "@types/vscode": "^1.100.0",
-    "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
-    "typescript-eslint": "^8.56.1",
+    "@types/vscode": "^1.100.0",
+    "@vscode/vsce": "^3.9.2",
     "eslint": "^9.39.3",
     "typescript": "^5.9.3",
-    "@vscode/test-cli": "^0.0.12",
-    "@vscode/test-electron": "^2.5.2"
+    "typescript-eslint": "^8.56.1"
   }
 }

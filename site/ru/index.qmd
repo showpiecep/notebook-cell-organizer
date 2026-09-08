@@ -1,0 +1,122 @@
+---
+title: "Организуйте импорты в Jupyter Notebook"
+subtitle: "Расширение VS Code, которое собирает разбросанные импорты Python и команды оболочки в аккуратные ячейки — с дополнительной сортировкой Ruff."
+description: "Организация и сортировка импортов Python в Jupyter Notebook и IPYNB с помощью Notebook Cell Organizer для VS Code. Поддержка Ruff, удаление дубликатов и организация при сохранении."
+canonical-url: https://showpiecep.github.io/notebook-cell-organizer/ru/
+image: ../assets/icon.png
+page-layout: full
+toc: false
+header-includes: |
+  <link rel="alternate" hreflang="en" href="https://showpiecep.github.io/notebook-cell-organizer/">
+  <link rel="alternate" hreflang="ru" href="https://showpiecep.github.io/notebook-cell-organizer/ru/">
+  <link rel="alternate" hreflang="x-default" href="https://showpiecep.github.io/notebook-cell-organizer/">
+---
+
+::: {.hero-actions}
+[Установить из VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer){.btn .btn-primary .btn-lg}
+[Исходный код на GitHub](https://github.com/showpiecep/notebook-cell-organizer){.btn .btn-outline-secondary .btn-lg}
+:::
+
+::: {.trust-line}
+Бесплатное расширение с открытым исходным кодом · Работает с `.ipynb` · Ruff необязателен
+:::
+
+## Приведите импорты notebook в порядок одной командой
+
+При исследовательской работе импорты и команды установки часто оказываются
+разбросаны по всему notebook. Notebook Cell Organizer переносит импорты верхнего
+уровня и команды оболочки в отдельные ячейки в начале notebook, не затрагивая
+условные и локальные импорты внутри функций.
+
+::: {.demo-frame}
+![Notebook Cell Organizer организует ячейки Jupyter Notebook в VS Code](../assets/demo.gif){fig-alt="Расширение VS Code собирает импорты и команды оболочки в отдельные ячейки Jupyter Notebook"}
+:::
+
+::: {.feature-grid}
+::: {.feature-card}
+### Собирает импорты
+
+Переносит инструкции `import` и `from ... import ...` верхнего уровня в одну
+ячейку, включая многострочные импорты со скобками.
+:::
+
+::: {.feature-card}
+### Сортирует с Ruff
+
+При необходимости применяет правила импортов Ruff к собранному Python-коду.
+Команду и аргументы можно настроить для `uv`, виртуального окружения или другого
+способа запуска.
+:::
+
+::: {.feature-card}
+### Сохраняет поведение
+
+Оставляет на месте импорты внутри `TYPE_CHECKING`, условий, блоков `try`, функций
+и классов.
+:::
+
+::: {.feature-card}
+### Удаляет повторы
+
+Удаляет дубликаты импортов и команд оболочки, а также ячейки, которые опустели
+после организации.
+:::
+
+::: {.feature-card}
+### Работает при сохранении
+
+Запускайте организацию с панели notebook или из палитры команд либо включите её
+автоматически при каждом сохранении.
+:::
+
+::: {.feature-card}
+### Безопасно обрабатывает ошибки
+
+Если Ruff отсутствует или завершается с ошибкой, расширение сохраняет исходный
+порядок собранных импортов и заканчивает обычную организацию.
+:::
+:::
+
+## До и после
+
+::: {.comparison-grid}
+::: {.comparison-card}
+### До
+
+```python
+# ячейка 0
+import pandas as pd
+data = pd.read_csv("data.csv")
+
+# ячейка 1
+import os
+!pip install scikit-learn
+```
+:::
+
+::: {.comparison-card}
+### После
+
+```python
+# ячейка 0
+!pip install scikit-learn
+
+# ячейка 1
+import os
+
+import pandas as pd
+
+# ячейка 2
+data = pd.read_csv("data.csv")
+```
+:::
+:::
+
+## Как начать
+
+1. Установите [Notebook Cell Organizer из VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer).
+2. Откройте Jupyter Notebook в VS Code.
+3. Откройте палитру команд и выполните **Notebook: Organize Notebook Cells** либо нажмите кнопку расширения на панели notebook.
+4. При необходимости [включите сортировку импортов через Ruff](ruff.qmd).
+
+Для стандартной организации устанавливать Ruff не требуется.

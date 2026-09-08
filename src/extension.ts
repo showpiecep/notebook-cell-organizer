@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
+import { extractCellContent } from './organizer';
+import { sortImportsWithRuff } from './ruff';
 
-const SHELL_RE = /^\s*(!|%pip\s|%conda\s)/;
-const IMPORT_RE = /^\s*(import\s|from\s+\S+\s+import\s)/;
+let outputChannel: vscode.OutputChannel;
 
 async function organizeNotebook(notebook: vscode.NotebookDocument, silent = false): Promise<void> {
     const shellLines = new Set<string>();
@@ -27,42 +28,11 @@ async function organizeNotebook(notebook: vscode.NotebookDocument, silent = fals
         }
 
         const originalText = cell.document.getText();
-        const remaining: string[] = [];
+        const extracted = extractCellContent(originalText);
+        extracted.shellCommands.forEach(command => shellLines.add(command));
+        extracted.imports.forEach(importStatement => importLines.add(importStatement));
 
-        const lines = originalText.split('\n');
-        let j = 0;
-        while (j < lines.length) {
-            const line = lines[j];
-            if (SHELL_RE.test(line)) {
-                shellLines.add(line);
-                j++;
-            } else if (IMPORT_RE.test(line)) {
-                const opens = (line.match(/\(/g) || []).length;
-                const closes = (line.match(/\)/g) || []).length;
-                if (opens > closes) {
-                    // Multi-line import: collect until parens are balanced
-                    const block: string[] = [line];
-                    let balance = opens - closes;
-                    j++;
-                    while (j < lines.length && balance > 0) {
-                        const l = lines[j];
-                        block.push(l);
-                        balance += (l.match(/\(/g) || []).length;
-                        balance -= (l.match(/\)/g) || []).length;
-                        j++;
-                    }
-                    importLines.add(block.join('\n'));
-                } else {
-                    importLines.add(line);
-                    j++;
-                }
-            } else {
-                remaining.push(line);
-                j++;
-            }
-        }
-
-        const newText = remaining.join('\n').trim();
+        const newText = extracted.remainingText;
         if (newText !== originalText.trim()) {
             cellNewTexts.set(i, newText);
         }
@@ -78,12 +48,44 @@ async function organizeNotebook(notebook: vscode.NotebookDocument, silent = fals
         return;
     }
 
-    // Idempotency check: if only the top N cells were touched and all become empty,
-    // the notebook is already organized — nothing would actually change
+    let organizedImports = [...importLines].join('\n');
+    const config = vscode.workspace.getConfiguration(
+        'notebook-cell-organizer',
+        notebook.uri,
+    );
+    const useRuff = config.get<boolean>('useRuffForImportSorting', false);
+
+    if (useRuff && language === 'python' && organizedImports) {
+        const result = await sortImportsWithRuff(organizedImports, {
+            command: config.get<string>('ruff.command', 'ruff'),
+            arguments: config.get<string[]>('ruff.arguments', [
+                'check',
+                '--select',
+                'I',
+                '--fix',
+                '${file}',
+            ]),
+        });
+        organizedImports = result.text;
+
+        if (result.message) {
+            outputChannel.appendLine(result.message);
+        }
+    }
+
+    // If the affected cells are already at the top, compare them with the final
+    // content too. This still lets Ruff re-sort an already organized import cell.
     const newCellCount = (shellLines.size > 0 ? 1 : 0) + (importLines.size > 0 ? 1 : 0);
     const onlyTopModified = [...cellNewTexts.keys()].every(k => k < newCellCount);
     const allBecomeEmpty = [...cellNewTexts.values()].every(v => v === '');
-    if (onlyTopModified && allBecomeEmpty) {
+    const expectedTopCellTexts = [
+        ...(shellLines.size > 0 ? [[...shellLines].join('\n')] : []),
+        ...(importLines.size > 0 ? [organizedImports] : []),
+    ];
+    const topCellsMatch = expectedTopCellTexts.every((text, index) =>
+        notebook.cellAt(index).document.getText().trim() === text.trim()
+    );
+    if (onlyTopModified && allBecomeEmpty && topCellsMatch) {
         if (!silent) {
             vscode.window.showInformationMessage('Nothing to organize.');
         }
@@ -122,7 +124,7 @@ async function organizeNotebook(notebook: vscode.NotebookDocument, silent = fals
     if (importLines.size > 0) {
         newCells.push(new vscode.NotebookCellData(
             vscode.NotebookCellKind.Code,
-            [...importLines].join('\n'),
+            organizedImports,
             language
         ));
     }
@@ -141,6 +143,7 @@ async function organizeNotebook(notebook: vscode.NotebookDocument, silent = fals
 }
 
 export function activate(context: vscode.ExtensionContext) {
+    outputChannel = vscode.window.createOutputChannel('Notebook Cell Organizer');
     // Command available from Command Palette and notebook toolbar
     const organizeCommand = vscode.commands.registerCommand(
         'notebook-cell-organizer.organize',
@@ -162,7 +165,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(organizeCommand, saveListener);
+    context.subscriptions.push(organizeCommand, saveListener, outputChannel);
 }
 
 export function deactivate() {}
