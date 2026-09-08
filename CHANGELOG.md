@@ -4,9 +4,13 @@ All notable changes to the "notebook-cell-organizer" extension will be documente
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-08
+
 ### Added
 
-- Optional Ruff import sorting with configurable command and arguments
+- Optional Ruff import sorting with configurable executable and arguments
+- Automated CI checks and tagged GitHub releases with downloadable VSIX
+- English and Russian Quarto documentation website
 
 ### Changed
 
