@@ -6,6 +6,10 @@ canonical-url: https://showpiecep.github.io/notebook-cell-organizer/
 image: assets/icon.png
 page-layout: full
 toc: false
+header-includes: |
+  <link rel="alternate" hreflang="en" href="https://showpiecep.github.io/notebook-cell-organizer/">
+  <link rel="alternate" hreflang="ru" href="https://showpiecep.github.io/notebook-cell-organizer/ru/">
+  <link rel="alternate" hreflang="x-default" href="https://showpiecep.github.io/notebook-cell-organizer/">
 ---
 
 ::: {.hero-actions}

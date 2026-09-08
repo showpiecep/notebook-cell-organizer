@@ -33,7 +33,7 @@ website:
           - text: English
             href: index.qmd
           - text: Русский
-            href: ru.qmd
+            href: ru/index.qmd
       - text: Marketplace
         href: https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer
       - icon: github
@@ -56,6 +56,7 @@ format:
     code-copy: true
     anchor-sections: true
     include-in-header: schema.html
+    include-after-body: language-switcher.html
 
 execute:
   freeze: auto

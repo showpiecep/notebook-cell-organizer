@@ -3,6 +3,10 @@ title: "Frequently asked questions"
 description: "Answers about organizing Python imports and shell commands in Jupyter Notebook IPYNB files with VS Code."
 canonical-url: https://showpiecep.github.io/notebook-cell-organizer/faq.html
 image: assets/icon.png
+header-includes: |
+  <link rel="alternate" hreflang="en" href="https://showpiecep.github.io/notebook-cell-organizer/faq.html">
+  <link rel="alternate" hreflang="ru" href="https://showpiecep.github.io/notebook-cell-organizer/ru/faq.html">
+  <link rel="alternate" hreflang="x-default" href="https://showpiecep.github.io/notebook-cell-organizer/faq.html">
 ---
 
 ## Does the extension edit the IPYNB JSON directly?

@@ -1,0 +1,78 @@
+---
+title: "Сортировка импортов notebook с помощью Ruff"
+description: "Настройка сортировки импортов Ruff в Notebook Cell Organizer для VS Code: абсолютный путь к исполняемому файлу и запуск через uv."
+canonical-url: https://showpiecep.github.io/notebook-cell-organizer/ru/ruff.html
+image: ../assets/icon.png
+header-includes: |
+  <link rel="alternate" hreflang="en" href="https://showpiecep.github.io/notebook-cell-organizer/ruff.html">
+  <link rel="alternate" hreflang="ru" href="https://showpiecep.github.io/notebook-cell-organizer/ru/ruff.html">
+  <link rel="alternate" hreflang="x-default" href="https://showpiecep.github.io/notebook-cell-organizer/ruff.html">
+---
+
+Notebook Cell Organizer может передать собранные импорты Python в
+[Ruff](https://docs.astral.sh/ruff/) перед созданием ячейки импортов. По умолчанию
+эта возможность отключена, поэтому устанавливать Ruff необязательно.
+
+## Включение Ruff
+
+Откройте настройки VS Code, найдите `Notebook Cell Organizer` и включите:
+
+```json
+{
+  "notebook-cell-organizer.useRuffForImportSorting": true
+}
+```
+
+Команда по умолчанию эквивалентна следующей:
+
+```bash
+ruff check --select I --fix "${file}"
+```
+
+Вместо `${file}` подставляется путь к временному Python-файлу, содержащему
+только импорты, собранные из notebook.
+
+## Абсолютный путь до Ruff
+
+Если Ruff недоступен в окружении, унаследованном VS Code, укажите путь к
+исполняемому файлу напрямую:
+
+```json
+{
+  "notebook-cell-organizer.useRuffForImportSorting": true,
+  "notebook-cell-organizer.ruff.command": "/absolute/path/to/.venv/bin/ruff"
+}
+```
+
+## Запуск Ruff через uv
+
+Команда и аргументы хранятся отдельно, поэтому командная оболочка не используется:
+
+```json
+{
+  "notebook-cell-organizer.useRuffForImportSorting": true,
+  "notebook-cell-organizer.ruff.command": "uv",
+  "notebook-cell-organizer.ruff.arguments": [
+    "run",
+    "ruff",
+    "check",
+    "--select",
+    "I",
+    "--fix",
+    "${file}"
+  ]
+}
+```
+
+## Поведение при ошибке
+
+На выполнение Ruff отводится десять секунд. Если исполняемый файл не найден,
+в аргументах отсутствует `${file}`, Ruff сообщает об ошибке или итоговый файл
+оказывается пустым, расширение:
+
+1. сохраняет исходный порядок собранных импортов;
+2. завершает обычную организацию notebook;
+3. записывает причину в канал вывода **Notebook Cell Organizer**.
+
+Ruff запускается только для Python-notebook, в которых найден хотя бы один
+импорт верхнего уровня.

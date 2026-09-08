@@ -1,0 +1,68 @@
+<script>
+(() => {
+  const pageNames = new Set(["index.html", "ruff.html", "faq.html"]);
+  const pathParts = window.location.pathname.split("/").filter(Boolean);
+  const lastPart = pathParts.at(-1) || "index.html";
+  const currentPage = pageNames.has(lastPart) ? lastPart : "index.html";
+  const isRussian = document.documentElement.lang.toLowerCase().startsWith("ru");
+
+  const languageLinks = new Map([
+    ["English", isRussian ? `../${currentPage}` : currentPage],
+    ["Русский", isRussian ? currentPage : `ru/${currentPage}`],
+  ]);
+
+  for (const item of document.querySelectorAll(".dropdown-item")) {
+    const label = item.querySelector(".dropdown-text")?.textContent?.trim();
+    if (languageLinks.has(label)) {
+      item.href = languageLinks.get(label);
+    }
+  }
+
+  if (!isRussian) {
+    return;
+  }
+
+  const navigation = new Map([
+    ["Home", ["Главная", "index.html"]],
+    ["Ruff setup", ["Настройка Ruff", "ruff.html"]],
+    ["FAQ", ["Вопросы", "faq.html"]],
+  ]);
+
+  for (const link of document.querySelectorAll("#navbarCollapse .nav-link")) {
+    const label = link.querySelector(".menu-text")?.textContent?.trim();
+    const localized = navigation.get(label);
+    if (!localized) {
+      continue;
+    }
+
+    const [text, href] = localized;
+    link.querySelector(".menu-text").textContent = text;
+    link.href = href;
+    link.classList.toggle("active", href === currentPage);
+    if (href === currentPage) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  }
+
+  for (const brand of document.querySelectorAll(".navbar-brand")) {
+    brand.href = "index.html";
+  }
+
+  const languageIcon = document.querySelector(".bi-translate");
+  if (languageIcon) {
+    languageIcon.setAttribute("aria-label", "Язык");
+  }
+
+  const footerText = document.querySelector(".nav-footer-left p");
+  if (footerText) {
+    footerText.textContent = "Notebook Cell Organizer распространяется бесплатно по лицензии MIT.";
+  }
+
+  const githubIcon = document.querySelector(".bi-github");
+  if (githubIcon) {
+    githubIcon.setAttribute("aria-label", "Репозиторий GitHub");
+  }
+})();
+</script>
