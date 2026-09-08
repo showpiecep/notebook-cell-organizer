@@ -3,6 +3,7 @@
 .vscode-test/**
 .ruff_cache/**
 scripts/**
+site/**
 src/**
 .gitignore
 .yarnrc

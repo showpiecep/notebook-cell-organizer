@@ -1,0 +1,117 @@
+---
+title: "Organize imports in Jupyter notebooks"
+subtitle: "A focused VS Code extension that collects scattered Python imports and shell commands into clean cells — with optional Ruff sorting."
+description: "Sort and organize Python imports in Jupyter Notebook and IPYNB files with Notebook Cell Organizer for VS Code. Optional Ruff integration, duplicate removal, and organize on save."
+canonical-url: https://showpiecep.github.io/notebook-cell-organizer/
+image: assets/icon.png
+page-layout: full
+toc: false
+---
+
+::: {.hero-actions}
+[Install from VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer){.btn .btn-primary .btn-lg}
+[View source on GitHub](https://github.com/showpiecep/notebook-cell-organizer){.btn .btn-outline-secondary .btn-lg}
+:::
+
+::: {.trust-line}
+Free and open source · Works with `.ipynb` files · Ruff is optional
+:::
+
+## Clean notebook imports in one command
+
+Imports and installation commands often end up scattered across an exploratory
+notebook. Notebook Cell Organizer moves top-level imports and shell commands to
+dedicated cells at the beginning of the notebook without moving conditional or
+function-local imports.
+
+::: {.demo-frame}
+![Notebook Cell Organizer reorganizing a Jupyter notebook in VS Code](assets/demo.gif){fig-alt="VS Code extension collecting imports and shell commands into dedicated Jupyter notebook cells"}
+:::
+
+::: {.feature-grid}
+::: {.feature-card}
+### Collect imports
+
+Moves top-level `import` and `from ... import ...` statements into one import
+cell, including parenthesized multi-line imports.
+:::
+
+::: {.feature-card}
+### Sort with Ruff
+
+Optionally runs Ruff's import rules on the collected Python imports. The command
+and arguments are configurable for `uv`, virtual environments, and custom setups.
+:::
+
+::: {.feature-card}
+### Preserve behavior
+
+Leaves imports inside `TYPE_CHECKING`, conditionals, `try` blocks, functions,
+and classes exactly where they are.
+:::
+
+::: {.feature-card}
+### Remove repetition
+
+Deduplicates repeated imports and shell commands while removing cells that
+become empty after organization.
+:::
+
+::: {.feature-card}
+### Organize on save
+
+Use the notebook toolbar or Command Palette, or enable automatic organization
+whenever a notebook is saved.
+:::
+
+::: {.feature-card}
+### Fail safely
+
+If Ruff is unavailable or fails, the extension keeps the collected imports and
+finishes the basic organization.
+:::
+:::
+
+## Before and after
+
+::: {.comparison-grid}
+::: {.comparison-card}
+### Before
+
+```python
+# cell 0
+import pandas as pd
+data = pd.read_csv("data.csv")
+
+# cell 1
+import os
+!pip install scikit-learn
+```
+:::
+
+::: {.comparison-card}
+### After
+
+```python
+# cell 0
+!pip install scikit-learn
+
+# cell 1
+import os
+
+import pandas as pd
+
+# cell 2
+data = pd.read_csv("data.csv")
+```
+:::
+:::
+
+## Get started
+
+1. Install [Notebook Cell Organizer from the VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer).
+2. Open a Jupyter Notebook in VS Code.
+3. Open the Command Palette and run **Notebook: Organize Notebook Cells**, or use the notebook toolbar button.
+4. Optionally [enable Ruff import sorting](ruff.qmd).
+
+No Ruff installation is required for the standard organizer.

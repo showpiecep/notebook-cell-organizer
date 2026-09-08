@@ -1,0 +1,56 @@
+project:
+  type: website
+  output-dir: _site
+  pre-render: node ../scripts/prepare-site-assets.mjs
+  resources:
+    - robots.txt
+
+website:
+  title: Notebook Cell Organizer
+  site-url: https://showpiecep.github.io/notebook-cell-organizer/
+  description: Organize and sort Python imports in Jupyter Notebook and IPYNB files directly in VS Code.
+  favicon: assets/icon.png
+  open-graph: true
+  twitter-card: true
+  search: true
+  page-navigation: true
+  repo-url: https://github.com/showpiecep/notebook-cell-organizer
+  repo-actions:
+    - issue
+  navbar:
+    logo: assets/icon.png
+    left:
+      - href: index.qmd
+        text: Home
+      - href: ruff.qmd
+        text: Ruff setup
+      - href: faq.qmd
+        text: FAQ
+      - href: ru.qmd
+        text: Русский
+    right:
+      - text: Marketplace
+        href: https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer
+      - icon: github
+        href: https://github.com/showpiecep/notebook-cell-organizer
+        aria-label: GitHub repository
+  page-footer:
+    left: "Notebook Cell Organizer is open source under the MIT License."
+    right:
+      - text: GitHub
+        href: https://github.com/showpiecep/notebook-cell-organizer
+      - text: Marketplace
+        href: https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    smooth-scroll: true
+    code-copy: true
+    anchor-sections: true
+    include-in-header: schema.html
+
+execute:
+  freeze: auto

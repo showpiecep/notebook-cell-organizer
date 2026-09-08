@@ -1,0 +1,73 @@
+---
+title: "Sort notebook imports with Ruff"
+description: "Configure Ruff import sorting for Notebook Cell Organizer in VS Code, including absolute executable paths and uv run ruff."
+canonical-url: https://showpiecep.github.io/notebook-cell-organizer/ruff.html
+image: assets/icon.png
+---
+
+Notebook Cell Organizer can pass the collected Python imports through
+[Ruff](https://docs.astral.sh/ruff/) before creating the import cell. This is
+disabled by default, so installing Ruff is optional.
+
+## Enable Ruff
+
+Open VS Code Settings, search for `Notebook Cell Organizer`, and enable:
+
+```json
+{
+  "notebook-cell-organizer.useRuffForImportSorting": true
+}
+```
+
+The default command is equivalent to:
+
+```bash
+ruff check --select I --fix "${file}"
+```
+
+`${file}` is replaced with a temporary Python file containing only the imports
+collected from the notebook.
+
+## Use an absolute Ruff path
+
+If Ruff is not available in the environment inherited by VS Code, configure
+the executable directly:
+
+```json
+{
+  "notebook-cell-organizer.useRuffForImportSorting": true,
+  "notebook-cell-organizer.ruff.command": "/absolute/path/to/.venv/bin/ruff"
+}
+```
+
+## Run Ruff through uv
+
+The command and arguments are stored separately, so no shell is involved:
+
+```json
+{
+  "notebook-cell-organizer.useRuffForImportSorting": true,
+  "notebook-cell-organizer.ruff.command": "uv",
+  "notebook-cell-organizer.ruff.arguments": [
+    "run",
+    "ruff",
+    "check",
+    "--select",
+    "I",
+    "--fix",
+    "${file}"
+  ]
+}
+```
+
+## Failure behavior
+
+Ruff execution has a ten-second timeout. If the executable cannot be found,
+the arguments do not contain `${file}`, Ruff reports an error, or the resulting
+file is empty, the extension:
+
+1. keeps the original collected imports;
+2. completes the normal notebook organization;
+3. writes the reason to the **Notebook Cell Organizer** output channel.
+
+Ruff is only invoked for Python notebooks with at least one collected import.

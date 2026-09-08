@@ -1,5 +1,9 @@
 # Notebook Cell Organizer
 
+[Website](https://showpiecep.github.io/notebook-cell-organizer/) ·
+[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer) ·
+[Issues](https://github.com/showpiecep/notebook-cell-organizer/issues)
+
 ![Demo](images/demo.gif)
 
 A VS Code extension that automatically reorganizes cells in a Jupyter Notebook — moving shell commands and imports to dedicated cells at the top.

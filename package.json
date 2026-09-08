@@ -10,6 +10,19 @@
     "type": "git",
     "url": "https://github.com/showpiecep/notebook-cell-organizer"
   },
+  "homepage": "https://showpiecep.github.io/notebook-cell-organizer/",
+  "bugs": {
+    "url": "https://github.com/showpiecep/notebook-cell-organizer/issues"
+  },
+  "keywords": [
+    "jupyter",
+    "notebook",
+    "ipynb",
+    "python",
+    "imports",
+    "import sorting",
+    "ruff"
+  ],
   "engines": {
     "vscode": "^1.100.0"
   },
