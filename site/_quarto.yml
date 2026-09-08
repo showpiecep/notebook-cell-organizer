@@ -26,9 +26,14 @@ website:
         text: Ruff setup
       - href: faq.qmd
         text: FAQ
-      - href: ru.qmd
-        text: Русский
     right:
+      - icon: translate
+        aria-label: Language
+        menu:
+          - text: English
+            href: index.qmd
+          - text: Русский
+            href: ru.qmd
       - text: Marketplace
         href: https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer
       - icon: github
