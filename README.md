@@ -1,8 +1,10 @@
 # Notebook Cell Organizer
 
-[Website](https://showpiecep.github.io/notebook-cell-organizer/) ·
-[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer) ·
-[Issues](https://github.com/showpiecep/notebook-cell-organizer/issues)
+<p align="center">
+  <a href="https://showpiecep.github.io/notebook-cell-organizer/"><img alt="Website" src="https://img.shields.io/badge/Website-GitHub%20Pages-222222?style=flat-square&amp;logo=githubpages&amp;logoColor=white"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=showpiecep.notebook-cell-organizer"><img alt="VS Code Marketplace" src="https://img.shields.io/badge/Marketplace-Install-007ACC?style=flat-square&amp;logo=visualstudiocode&amp;logoColor=white"></a>
+  <a href="https://github.com/showpiecep/notebook-cell-organizer/issues"><img alt="GitHub Issues" src="https://img.shields.io/github/issues/showpiecep/notebook-cell-organizer?style=flat-square&amp;logo=github&amp;label=Issues"></a>
+</p>
 
 ![Demo](images/demo.gif)
 

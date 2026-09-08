@@ -2,7 +2,7 @@
   "name": "notebook-cell-organizer",
   "displayName": "Notebook Cell Organizer",
   "description": "Moves shell commands and imports to dedicated cells at the top of a Jupyter notebook",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "showpiecep",
   "icon": "images/icon.png",
   "license": "MIT",
