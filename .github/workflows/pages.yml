@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - "site/**"
+      - "images/icon.png"
+      - "images/demo.gif"
+      - "scripts/prepare-site-assets.mjs"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
