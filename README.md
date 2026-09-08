@@ -135,6 +135,26 @@ location so that organizing a notebook does not change its runtime behavior.
 - VS Code `^1.100.0` (April 2025)
 - [Jupyter extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) for opening `.ipynb` files
 
+## Local Website Preview
+
+Install [Quarto](https://quarto.org/docs/get-started/), then start the website
+with live reload:
+
+```bash
+make site-preview
+```
+
+The preview command opens the site in a browser and keeps running until you
+press `Ctrl+C`. To render static files into `site/_site` without starting a
+server, run:
+
+```bash
+make site
+```
+
+In VS Code, the same commands are available through **Tasks: Run Task** as
+**Website: Preview Quarto** and **Website: Render Quarto**.
+
 ## License
 
 MIT

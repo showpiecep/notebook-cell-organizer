@@ -15,6 +15,32 @@
 				"kind": "build",
 				"isDefault": true
 			}
+		},
+		{
+			"label": "Website: Render Quarto",
+			"type": "shell",
+			"command": "make",
+			"args": [
+				"site"
+			],
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			}
+		},
+		{
+			"label": "Website: Preview Quarto",
+			"type": "shell",
+			"command": "make",
+			"args": [
+				"site-preview"
+			],
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			}
 		}
 	]
 }

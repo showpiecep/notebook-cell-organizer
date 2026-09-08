@@ -18,4 +18,5 @@ src/**
 out/test/**
 images/demo.gif
 .markdownlint.json
+Makefile
 **.ipynb
